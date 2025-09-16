@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  log-server:
+    build: .
+    container_name: log-server
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./logs:/var/log/central-logs   # montamos logs en tu VM
+    environment:
+      - NODE_ENV=production
