@@ -7,6 +7,20 @@ services:
     ports:
       - "9500:4000"
     volumes:
-      - /var/www/motoclick-logs:/var/log/central-logs   # montamos logs en tu VM
+      - /var/www/motoclick-logs:/var/log/central-logs
     environment:
       - NODE_ENV=production
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "9501:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
+volumes:
+  grafana_data:
