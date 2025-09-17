@@ -5,8 +5,8 @@ services:
     build: .
     container_name: log-server
     ports:
-      - "4000:4000"
+      - "9500:4000"
     volumes:
-      - ./logs:/var/log/central-logs   # montamos logs en tu VM
+      - /var/www/motoclick-logs:/var/log/central-logs   # montamos logs en tu VM
     environment:
       - NODE_ENV=production
