@@ -40,7 +40,7 @@ const performanceLogger = createLogger({
     new DailyRotateFile({
       filename: path.join(logDir, "performance-%DATE%.log"),
       datePattern: "YYYY-MM-DD",
-      maxFiles: "15d",
+      maxFiles: "7d",
       zippedArchive: true,
     }),
     new transports.Console(),
