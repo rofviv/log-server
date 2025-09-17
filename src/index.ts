@@ -19,23 +19,43 @@ const logger = createLogger({
       filename: path.join(logDir, "errors-%DATE%.log"),
       datePattern: "YYYY-MM-DD",
       level: "error",
-      maxFiles: "15d",
-      zippedArchive: true
+      maxFiles: "7d",
+      zippedArchive: true,
     }),
     // todos los logs diarios
     new DailyRotateFile({
       filename: path.join(logDir, "combined-%DATE%.log"),
       datePattern: "YYYY-MM-DD",
-      maxFiles: "15d",
-      zippedArchive: true
+      maxFiles: "7d",
+      zippedArchive: true,
     }),
-    new transports.Console()
+    new transports.Console(),
+  ],
+});
+
+const performanceLogger = createLogger({
+  level: "info",
+  format: format.combine(format.timestamp(), format.json()),
+  transports: [
+    new DailyRotateFile({
+      filename: path.join(logDir, "performance-%DATE%.log"),
+      datePattern: "YYYY-MM-DD",
+      maxFiles: "15d",
+      zippedArchive: true,
+    }),
+    new transports.Console(),
   ],
 });
 
 app.post("/log", (req, res) => {
   const { level, message, meta } = req.body;
   logger.log(level || "info", message, meta || {});
+  res.sendStatus(200);
+});
+
+app.post("/performance", (req, res) => {
+  const { level, message, meta } = req.body;
+  performanceLogger.log(level || "info", message, meta || {});
   res.sendStatus(200);
 });
 
