@@ -59,5 +59,16 @@ app.post("/performance", (req, res) => {
   res.sendStatus(200);
 });
 
+app.get("/", (req, res) => {
+  res.json({
+    message: "Hello World! Log Server is running",
+    version: "1.0.0",
+    endpoints: {
+      "POST /log": "logs",
+      "POST /performance": "performance",
+    },
+  });
+});
+
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Log server listening on port ${PORT}`));
